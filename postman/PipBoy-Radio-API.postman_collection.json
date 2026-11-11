@@ -1,0 +1,43 @@
+{
+  "info": {
+    "name": "Pip-Boy Radio Store API",
+    "description": "Endpoints REST para registro, JWT, canciones, favoritos, carrito, compras, tickets PDF y administración.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api" },
+    { "key": "token", "value": "" },
+    { "key": "songId", "value": "1" },
+    { "key": "purchaseId", "value": "1" }
+  ],
+  "item": [
+    { "name": "Health", "request": { "method": "GET", "url": "{{baseUrl}}/health" } },
+    { "name": "Auth", "item": [
+      { "name": "Registro", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Explorador 76\",\n  \"email\": \"explorador@example.com\",\n  \"password\": \"clave123\"\n}" }, "url": "{{baseUrl}}/auth/register" } },
+      { "name": "Login", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"explorador@example.com\",\n  \"password\": \"clave123\"\n}" }, "url": "{{baseUrl}}/auth/login" } },
+      { "name": "Mi usuario", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/auth/me" } }
+    ] },
+    { "name": "Canciones", "item": [
+      { "name": "Listar y filtrar", "request": { "method": "GET", "url": "{{baseUrl}}/canciones?search=radio&genre=CLÁSICOS" } },
+      { "name": "Detalle", "request": { "method": "GET", "url": "{{baseUrl}}/canciones/{{songId}}" } }
+    ] },
+    { "name": "Favoritos", "item": [
+      { "name": "Listar favoritos", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/favoritos" } },
+      { "name": "Agregar favorito", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/favoritos/{{songId}}" } },
+      { "name": "Quitar favorito", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/favoritos/{{songId}}" } }
+    ] },
+    { "name": "Carrito y compra", "item": [
+      { "name": "Ver carrito", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/carrito" } },
+      { "name": "Agregar canción", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{ \"songId\": {{songId}}, \"quantity\": 1 }" }, "url": "{{baseUrl}}/carrito/items" } },
+      { "name": "Comprar y crear ticket", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/compras" } },
+      { "name": "Historial", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/compras" } },
+      { "name": "Descargar ticket PDF", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/compras/{{purchaseId}}/ticket" } }
+    ] },
+    { "name": "Administración", "item": [
+      { "name": "CRUD - listar", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/admin/canciones" } },
+      { "name": "CRUD - crear canción", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"title\": \"Nueva señal\",\n  \"artist\": \"Operador 76\",\n  \"album\": \"Transmisiones\",\n  \"genre\": \"INSTRUMENTAL\",\n  \"durationSeconds\": 180,\n  \"price\": 99.90,\n  \"description\": \"Canción agregada desde Postman\"\n}" }, "url": "{{baseUrl}}/admin/canciones" } },
+      { "name": "CRUD - editar", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{ \"price\": 110.00, \"genre\": \"CLÁSICOS\" }" }, "url": "{{baseUrl}}/admin/canciones/{{songId}}" } },
+      { "name": "CRUD - archivar", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/admin/canciones/{{songId}}" } }
+    ] }
+  ]
+}

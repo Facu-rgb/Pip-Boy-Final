@@ -1,0 +1,18 @@
+{
+  "info": { "name": "Pip-Boy PHP MVC API", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:8000" }, { "key": "token", "value": "" }],
+  "item": [
+    { "name": "Registro", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\"nombre\":\"Operador\",\"email\":\"operador@vault.local\",\"password\":\"123456\"}"}, "url": "{{baseUrl}}/usuarios/registro" } },
+    { "name": "Login", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "body": {"mode":"raw","raw":"{\"email\":\"operador@vault.local\",\"password\":\"123456\"}"}, "url": "{{baseUrl}}/usuarios/login" } },
+    { "name": "Listar productos", "request": { "method": "GET", "url": "{{baseUrl}}/productos" } },
+    { "name": "Buscar productos", "request": { "method": "GET", "url": "{{baseUrl}}/productos?buscar=wanderer" } },
+    { "name": "Ver producto", "request": { "method": "GET", "url": "{{baseUrl}}/productos/1" } },
+    { "name": "Mis favoritos", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/favoritos" } },
+    { "name": "Agregar favorito", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body":{"mode":"raw","raw":"{\"id_producto\":1}"}, "url": "{{baseUrl}}/favoritos/agregar" } },
+    { "name": "Ver carrito", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/carrito" } },
+    { "name": "Agregar al carrito", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}], "body":{"mode":"raw","raw":"{\"id_producto\":1,\"cantidad\":1}"}, "url": "{{baseUrl}}/carrito/agregar" } },
+    { "name": "Finalizar compra", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/compras/finalizar" } },
+    { "name": "Historial de compras", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/compras" } },
+    { "name": "Ticket PDF", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{token}}"}], "url": "{{baseUrl}}/tickets/1" } }
+  ]
+}
